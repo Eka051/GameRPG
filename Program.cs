@@ -20,6 +20,9 @@ public class Program
 
         hero.gunakanSkill(fireball);
         musuh.cetakInformasi();
+        hero.cetakInformasi();
+        musuh.gunakanSkill(heal);
+        musuh.cetakInformasi();
     }
 }
 
@@ -44,8 +47,6 @@ public abstract class Karakter
     public abstract void gunakanSkill(ISkill skill);
     public void cetakInformasi()
     {
-        Console.WriteLine($"==Info==" +
-            $"\nNama: {Nama}\nHP: {HP}\nMP: {MP}\nKekuatan: {Kekuatan}\n");
     }
 }
 
@@ -72,11 +73,13 @@ public class Fireball : ISkill
         if (karakter is Hero)
         {
             musuh.HP -= totalDamageHero;
+            karakter.MP -= 20;
             Console.WriteLine($"{karakter.Nama} menyerang {musuh.Nama} dengan skill Fireball memberikan damage sebesar {totalDamageHero}");
         }
         else if (karakter is Musuh)
         {
             musuh.HP -= totalDamageMusuh;
+            musuh.MP -= 20;
             Console.WriteLine($"{karakter.Nama} menyerang {musuh.Nama} dengan skill Fireball memberikan damage sebesar {totalDamageMusuh}");
         }
     }
@@ -90,11 +93,13 @@ public class IceBlast : ISkill
         if (karakter is Hero)
         {
             musuh.HP -= totalDamageHero;
+            karakter.MP -= 20;
             Console.WriteLine($"{karakter.Nama} menyerang {musuh.Nama} dengan skill IceBlast, memberikan damage {totalDamageHero} dan memperlambat gerakan");
         }
         else if (karakter is Musuh)
         {
             musuh.HP -= 15 * totalDamageMusuh;
+            musuh.MP -= 20;
             Console.WriteLine($"{karakter.Nama} menyerang {musuh.Nama} dengan skill IceBlast, memberikan damage {totalDamageMusuh} dan memperlambat gerakan");
         }
     }
@@ -121,7 +126,6 @@ public class Hero : Karakter
                 if (karakter is Musuh)
                 {
                     skill.Aktif(this, karakter);
-                    MP -= 20;
                     return;
                 }
             }
@@ -130,6 +134,11 @@ public class Hero : Karakter
         {
             Console.WriteLine($"{Nama} tidak memiliki MP yang cukup untuk menggunakan Skill");
         }
+    }
+
+    public new void cetakInformasi()
+    {
+        Console.WriteLine($"== Info Hero == \nNama: {Nama}\nHP: {HP}\nMP: {MP}\nKekuatan: {Kekuatan}\n");
     }
 }
 
@@ -154,7 +163,6 @@ public class Musuh : Karakter
                 if (karakter is Hero && karakter != this)
                 {
                     skill.Aktif(this, karakter);
-                    MP -= 20;
                     return;
                 }
             }
@@ -163,6 +171,11 @@ public class Musuh : Karakter
         {
             Console.WriteLine($"{Nama} tidak memiliki MP yang cukup untuk menggunakan Skill");
         }
+    }
+
+    public new void cetakInformasi()
+    {
+        Console.WriteLine($"== Info Musuh == \nNama: {Nama}\nHP: {HP}\nMP: {MP}\nKekuatan: {Kekuatan}\n");
     }
 
 }
