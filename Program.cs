@@ -8,8 +8,8 @@ public class Program
         Hero hero = new Hero("Harley", 1000, 500, 20);
         Musuh musuh = new Musuh("Kadita", 1000, 500, 10);
 
-        GameRPG.Characters.Add(hero);
-        GameRPG.Characters.Add(musuh);
+        GameRPG.karakter.Add(hero);
+        GameRPG.karakter.Add(musuh);
 
         Heal heal = new Heal();
         IceBlast iceBlast = new IceBlast();
@@ -28,7 +28,7 @@ public class Program
 
 public static class GameRPG
 {
-    public static List<Karakter> Characters = new List<Karakter>();
+    public static List<Karakter> karakter = new List<Karakter>();
 }
 
 public abstract class Karakter
@@ -121,7 +121,7 @@ public class Hero : Karakter
     {
         if (MP >= 20)
         {
-            foreach (var karakter in GameRPG.Characters)
+            foreach (var karakter in GameRPG.karakter)
             {
                 if (karakter is Musuh)
                 {
@@ -158,7 +158,7 @@ public class Musuh : Karakter
     {
         if (MP >= 20)
         {
-            foreach (var karakter in GameRPG.Characters)
+            foreach (var karakter in GameRPG.karakter)
             {
                 if (karakter is Hero && karakter != this)
                 {
